@@ -1,0 +1,60 @@
+spring:
+  application:
+    name: app-insights-engine
+
+  # ── Datasource (H2 para dev/test) ──────────────────────────────────────────
+  datasource:
+    url: jdbc:h2:mem:insightsdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
+
+  # ── Jackson ────────────────────────────────────────────────────────────────
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    deserialization:
+      fail-on-unknown-properties: false
+    default-property-inclusion: non_null
+
+# ── Server ─────────────────────────────────────────────────────────────────
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+# ── Actuator ───────────────────────────────────────────────────────────────
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, prometheus
+  endpoint:
+    health:
+      show-details: always
+
+# ── Insights Engine ────────────────────────────────────────────────────────
+insights:
+  engine:
+    async-processing: true
+    max-batch-size: 500
+    notification:
+      dry-run: true
+      channels:
+        email: true
+        sms: true
+        whatsapp: true
