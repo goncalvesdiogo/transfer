@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: compromissos-service
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    deserialization:
+      fail-on-unknown-properties: false
+
+server:
+  port: 8080
+
+aws:
+  region: us-east-1
+  dynamodb:
+    # Para rodar localmente com DynamoDB Local ou LocalStack:
+    # endpoint: http://localhost:8000
+    # local: true
+    local: false
+
+logging:
+  level:
+    br.com.exemplo: DEBUG
+    software.amazon.awssdk: WARN
